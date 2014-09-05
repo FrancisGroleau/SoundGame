@@ -34,50 +34,53 @@ function draw(){
 	c.fillText("\uf130", centerX - 65, centerY + 80 ,200);
 
 	
-	canvas.addEventListener('click', function(e) {
-			buttonClick();
-	},false);
+
 		
-	c.clearRect(0, 0, canvas.width, canvas.height);
+	//c.clearRect(0, 0, canvas.width, canvas.height);
 		//draw();
   
 }
 
 
 function buttonClick(){
-			
-
-	if(complete){
-		startRecording();
-		$('#canvas').css("background-color","#3071a9");
-		var timer =	setInterval(animateRecord,20);
-	}else{
-		//$('#canvas').addClass('doneRecording');
-		c.clearRect(0, 0, canvas.width, canvas.height);
-		draw();
-		stopRecording();
-		clearInterval(timer);
-	}
+		//if(complete){
+			startRecording();
+			$('#canvas').css("background-color","#3071a9");
+			var timer =	setInterval(animateRecord,20);
+			//var timer2 = setTimeout(function(){clearInterval(timer);clearTimeout(timer2)},4200);
+		//}else{
+			complete = true;
+			endAngle = 0;
+			//startRecording();
+			//buttonClick();
+		
+		//}
+	
 }
 	
 
 function animateRecord(){
+	if(complete){
+		if(endAngle <= 2){
 		
-	if(endAngle <= 2)
 			endAngle += 0.010;
-	else{
+			c.beginPath();	
+			c.arc(centerX,centerY,150,0,endAngle * Math.PI, false);
+			c.lineWidth = 10;
+			c.strokeStyle = "red";
+			c.stroke();
+					
+			c.fillStyle = "red";
+			c.font = "200px FontAwesome";
+			c.fillText("\uf130", centerX - 65, centerY + 80 ,200);		
+				
+		}else{
 			complete = false;
+			stopRecording();
+		}
+				
+		
 	}
-			
-	c.beginPath();	
-	c.arc(centerX,centerY,150,0,endAngle * Math.PI, false);
-	c.lineWidth = 10;
-	c.strokeStyle = "red";
-	c.stroke();
-			
-	c.fillStyle = "red";
-	c.font = "200px FontAwesome";
-	c.fillText("\uf130", centerX - 65, centerY + 80 ,200);
 }
 
 
@@ -96,20 +99,17 @@ function animateRecord(){
 
   function startRecording() {
     recorder && recorder.record();
-    //button.disabled = true;
-    //button.nextElementSibling.disabled = false;
-    //__log('Recording...');
   }
 
   function stopRecording() {
     recorder && recorder.stop();
-    //button.disabled = true;
-    //button.previousElementSibling.disabled = false;
-    //__log('Stopped recording.');
     
     // create WAV download link using audio data blob
     createDownloadLink();
     
+	$('#canvas').css("background-color","#428bca");
+	draw();
+	
     recorder.clear();
   }
 
@@ -154,9 +154,31 @@ function animateRecord(){
 	 
     });
 	
+	
+	canvas.addEventListener('click', function(e) {
+			buttonClick();
+	},false);
+	
 	$('.play').click(function(){
 	
 		au.play();
+		
+		var progress = setInterval(function () {
+			var $bar = $('.prog');
+
+			if ($bar.attr('aria-valuenow') >= 100) {
+				clearInterval(progress);
+			} else {
+				$bar.attr('aria-valuenow',$bar.attr('aria-valuenow') + 0.10);
+				var   bar_width = $bar.attr('aria-valuenow');
+					$bar.width(bar_width + '%');
+				
+				
+			}
+			//$bar.text($bar.width() / 4 + "%");
+		},400);
+		
+		
 	
 	});
   };
