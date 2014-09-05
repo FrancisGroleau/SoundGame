@@ -3,6 +3,8 @@
 	<title>Sound game</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="Scripts/script.js" type="text/javascript"></script>
+	<script src="Scripts/Recorderjs-master/recorder.js" type="text/javascript"></script>
+	<script src="Scripts/Recorderjs-master/recorderWorker.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="Styles/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="Styles/custom.css">
 	<link rel="stylesheet" type="text/css" href="Styles/font-awesome/css/font-awesome.min.css" >
@@ -23,12 +25,15 @@
 					</canvas>
 				</div>
 				<br />
-				<h2>Replay</h2>
-				  <a href="javascript:void(0)" class="btn btn-success play"><i class="fa fa-play"></i></a>
-				  <div class="progress-bar progress-bar-striped active prog"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-					<span class="sr-only"></span>
-				  </div>
-			
+				
+				<ul id="recordingslist"></ul>
+				<div class="playback">
+					<h2>Replay</h2>
+					<a href="javascript:void(0)" class="btn btn-success play"><i class="fa fa-play"></i></a>
+					<div class="progress-bar progress-bar-striped active prog"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
+						<span class="sr-only"></span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
